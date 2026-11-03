@@ -1,0 +1,165 @@
+##############################################################################
+  GRADEVECTOR - STUDENT PERFORMANCE & STUDY GROUP ANALYZER
+  Dataset: student_data.csv   |   Students: 30   |   Pass mark: 40   |   A grade: 80+
+##############################################################################
+
+==============================================================================
+ PHASE 1 - DATA SETUP
+==============================================================================
+Missing values found: 4 (Math_Score: 4)
+Filled using 'regression' imputation:
+   - Vivaan     Math     -> 69
+   - Shaurya    Math     -> 74
+   - Diya       Math     -> 53
+   - Kavya      Math     -> 89
+
+Class average per subject:
+   Math      68.13  ##################################
+   Science   67.40  ##################################
+   English   71.13  ####################################
+
+==============================================================================
+ PHASE 2 - STATISTICAL ANALYSIS
+==============================================================================
+           Mean  Median  Std_Dev     Min     Max    CV_%
+Math      68.13   71.00    13.81   37.00   93.00   20.26
+Science   67.40   70.50    13.67   36.00   91.00   20.28
+English   71.13   72.00    10.96   51.00   87.00   15.41
+Overall   68.89   71.33    10.82   45.00   83.67   15.70
+
+Attendance vs overall score: r = 0.943, r^2 = 0.888
+Per subject: Math r = 0.82, Science r = 0.73, English r = 0.84
+Trend line: overall = 0.775 x attendance + 3.91
+   There is a strong positive correlation (r = 0.94) between attendance and
+   overall score. Attendance explains about 89% of the variation in overall
+   scores; each extra 10% of attendance goes with about 7.7 more marks on
+   average.
+
+Students whose best subject is: Math 7, Science 7, English 16
+Top performer: Ananya (overall 83.67)
+
+==============================================================================
+ PHASE 3 - PASS / FAIL ODDS (EMPIRICAL PROBABILITY)
+==============================================================================
+Subject      P(pass)   P(fail)      P(A)   P(A) normal   # A
+Math           96.7%      3.3%     13.3%         20.5%     4
+Science        93.3%      6.7%     16.7%         18.8%     5
+English       100.0%      0.0%     33.3%         22.3%    10
+Overall       100.0%      0.0%     16.7%         16.3%     5
+
+   P(pass all three subjects)          90.0%
+   P(pass all) if independent          90.2%
+   P(at least one A)                   50.0%
+   P(A in all three subjects)           0.0%
+   P(fail at least one subject)        10.0%
+
+Conditional on attendance:
+   High (90%+)       n=12  P(pass all) 100.0%   P(>=1 A) 100.0%   avg 78.2
+   Medium (75-89%)   n=10  P(pass all) 100.0%   P(>=1 A)  20.0%   avg 68.9
+   Low (<75%)        n=8   P(pass all)  62.5%   P(>=1 A)  12.5%   avg 54.8
+
+==============================================================================
+ HOW SURE ARE WE? 95% CONFIDENCE (10,000 RESAMPLES)
+==============================================================================
+Class mean with bootstrap 95% interval:
+   Math      68.13   [ 63.13,  72.80]   +/- 4.8
+   Science   67.40   [ 62.57,  72.00]   +/- 4.7
+   English   71.13   [ 67.37,  74.97]   +/- 3.8
+   Overall   68.89   [ 65.01,  72.53]   +/- 3.8
+
+P(A grade) with Wilson 95% interval:
+   Math      13.3%   [  5.3%,  29.7%]
+   Science   16.7%   [  7.3%,  33.6%]
+   English   33.3%   [ 19.2%,  51.2%]
+   Overall   16.7%   [  7.3%,  33.6%]
+
+Attendance vs overall: r = 0.943, 95% CI [0.880, 0.978], permutation test p < 0.0001
+High (90%+) vs Low (<75%) attendance: 78.2 vs 54.8, a gap of 23.4 marks (95%
+CI 17.3 to 28.8), p < 0.0001, Cohen's d = 3.9.
+
+==============================================================================
+ PHASE 4 - STUDY BUDDY MATCH (COSINE SIMILARITY)
+==============================================================================
+Raw grade vectors:          cosine range 0.929 to 1.000  (too similar to rank)
+Standardised (z-score):     cosine range -0.996 to 0.996  (used for matching)
+Average similarity in pairs: 0.903   (random pairing: -0.012)
+
+STUDY BUDDY PAIRS
+  #  Pair                      Cosine    Avg   Strength  Focus
+  1  Shaurya, Kriti             0.994   76.2   English   Science
+  2  Sneha, Rashi               0.991   45.8   English   Science
+  3  Aditya, Rahul              0.989   76.3   English   Science
+  4  Pooja, Karan               0.983   73.8   English   Science
+  5  Aarav, Priya               0.975   78.3   English   Math
+  6  Neha, Nidhi                0.973   51.0   English   Math
+  7  Krishna, Amit              0.970   61.8   English   Science
+  8  Ananya, Riya               0.962   82.7   Science   Math
+  9  Vihaan, Ishaan             0.923   67.8   English   Science
+ 10  Sai, Kavya                 0.923   76.3   Math      English
+ 11  Arjun, Rohan               0.906   69.8   Science   English
+ 12  Vikram, Meera              0.892   79.7   Math      English
+ 13  Ayaan, Diya                0.736   58.0   Science   English
+ 14  Aadhya, Tanvi              0.689   70.3   Science   Math
+ 15  Vivaan, Saanvi             0.644   65.3   Math      English
+
+STUDY GROUPS OF 3   (avg similarity 0.794, random -0.011)
+  1  Amit, Sneha, Rashi                0.993   focus: Science
+  2  Shaurya, Kriti, Rahul             0.977   focus: Science
+  3  Aarav, Ananya, Riya               0.950   focus: Math
+  4  Priya, Pooja, Karan               0.915   focus: Science
+  5  Ayaan, Neha, Nidhi                0.900   focus: Math
+  6  Aditya, Vikram, Meera             0.791   focus: Science
+  7  Sai, Kavya, Rohan                 0.704   focus: English
+  8  Vihaan, Krishna, Ishaan           0.653   focus: Science
+  9  Vivaan, Arjun, Saanvi             0.576   focus: English
+ 10  Aadhya, Diya, Tanvi               0.482   focus: Math
+
+BONUS - PEER MENTOR PAIRS (opposite profiles)
+   Kriti     mentors Ayaan     in English (+29 marks, cosine -1.00)
+   Priya     mentors Vivaan    in English (+24 marks, cosine -0.98)
+   Vikram    mentors Nidhi     in Math    (+56 marks, cosine -0.97)
+   Meera     mentors Amit      in Science (+28 marks, cosine -0.96)
+   Riya      mentors Krishna   in Science (+23 marks, cosine -0.94)
+   Aditya    mentors Diya      in English (+21 marks, cosine -0.93)
+   Kavya     mentors Sneha     in Math    (+46 marks, cosine -0.92)
+   Rahul     mentors Neha      in Math    (+33 marks, cosine -0.88)
+   Shaurya   mentors Rashi     in Science (+37 marks, cosine -0.84)
+   Pooja     mentors Arjun     in English (+36 marks, cosine -0.82)
+   Karan     mentors Rohan     in English (+24 marks, cosine -0.73)
+   Tanvi     mentors Vihaan    in Science (+9 marks, cosine -0.68)
+   Aarav     mentors Saanvi    in Science (+27 marks, cosine -0.56)
+   Sai       mentors Aadhya    in Math    (+19 marks, cosine -0.51)
+   Ananya    mentors Ishaan    in Science (+37 marks, cosine -0.43)
+
+==============================================================================
+ PHASE 5 - EARLY WARNING (LOGISTIC REGRESSION ON ATTENDANCE)
+==============================================================================
+Needs support (overall < 60 or a failed subject): 6 of 30 students
+   P = 1 / (1 + e^-(18.21 -0.2611 x attendance))
+   Odds x0.07 per +10 attendance points
+   Leave-one-out: accuracy 93% (majority guess 80%), sensitivity 83%, AUC 0.97
+At least one A grade: 15 of 30 students
+   P = 1 / (1 + e^-(-17.00 +0.1980 x attendance))
+   Odds x7.25 per +10 attendance points
+   Leave-one-out: accuracy 80% (majority guess 50%), sensitivity 87%, AUC 0.91
+Below 70% attendance a student is more likely than not to need support; risk
+falls under 20% from 75%.
+
+What-if: expected overall score (95% prediction interval) by attendance
+    60%    50.4  [ 42.3,  58.4]   P(needs support)  92.7%   P(>=1 A)   0.6%
+    70%    58.1  [ 50.3,  65.9]   P(needs support)  48.2%   P(>=1 A)   4.2%
+    80%    65.9  [ 58.2,  73.5]   P(needs support)   6.4%   P(>=1 A)  23.9%
+    90%    73.6  [ 65.9,  81.3]   P(needs support)   0.5%   P(>=1 A)  69.5%
+   100%    81.4  [ 73.5,  89.2]   P(needs support)   0.0%   P(>=1 A)  94.3%
+
+RISK REGISTER - 8 students flagged
+   Rashi     High   P = 92.7%   attendance 60% (+16 to low risk)   overall 45.0
+   Neha      High   P = 92.7%   attendance 60% (+16 to low risk)   overall 52.0
+   Sneha     High   P = 90.7%   attendance 61% (+15 to low risk)   overall 46.7
+   Ayaan     High   P = 88.3%   attendance 62% (+14 to low risk)   overall 53.7
+   Nidhi     High   P = 77.4%   attendance 65% (+11 to low risk)   overall 50.0
+   Diya      High   P = 67.1%   attendance 67% (+9 to low risk)   overall 62.3
+   Rohan     Watch  P = 29.8%   attendance 73% (+3 to low risk)   overall 71.3
+   Amit      Watch  P = 24.7%   attendance 74% (+2 to low risk)   overall 57.7
+
+##############################################################################

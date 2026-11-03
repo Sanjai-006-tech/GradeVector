@@ -1,0 +1,14 @@
+numpy>=2.0
+pandas>=2.2
+matplotlib>=3.9
+
+# Interactive dashboard (streamlit run app.py)
+streamlit>=1.50
+plotly>=6.0
+
+# Optional: notebook and tests
+notebook>=7.0
+nbformat>=5.10
+nbconvert>=7.16
+ipykernel>=6.29
+pytest>=8.0

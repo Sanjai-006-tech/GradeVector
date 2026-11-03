@@ -1,0 +1,16 @@
+Group,Members,Cosine_Similarity,Avg_Overall,Shared_Strength,Focus_Subject
+1,"Shaurya, Kriti",0.994,76.2,English,Science
+2,"Sneha, Rashi",0.991,45.8,English,Science
+3,"Aditya, Rahul",0.989,76.3,English,Science
+4,"Pooja, Karan",0.983,73.8,English,Science
+5,"Aarav, Priya",0.975,78.3,English,Math
+6,"Neha, Nidhi",0.973,51.0,English,Math
+7,"Krishna, Amit",0.97,61.8,English,Science
+8,"Ananya, Riya",0.962,82.7,Science,Math
+9,"Vihaan, Ishaan",0.923,67.8,English,Science
+10,"Sai, Kavya",0.923,76.3,Math,English
+11,"Arjun, Rohan",0.906,69.8,Science,English
+12,"Vikram, Meera",0.892,79.7,Math,English
+13,"Ayaan, Diya",0.736,58.0,Science,English
+14,"Aadhya, Tanvi",0.689,70.3,Science,Math
+15,"Vivaan, Saanvi",0.644,65.3,Math,English
